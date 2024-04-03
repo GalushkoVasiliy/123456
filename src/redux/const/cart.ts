@@ -1,0 +1,8 @@
+export const CREATE_CART = 'CREATE_CART';
+export const ADD_TO_CART = 'ADD_TO_CART';
+export const GET_CART = 'GET_CART';
+export const GET_CART_TOTAL = 'GET_CART_TOTAL';
+export const CLEAR_CART = 'CLEAR_CART';
+export const CLEAR_GIFT_CART = 'CLEAR_GIFT_CART';
+export const MERGE_GUEST_CART_TO_USER_CART = 'MERGE_GUEST_CART_TO_USER_CART';
+export const GET_MASKED_CART = 'GET_MASKED_CART';

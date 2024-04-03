@@ -1,0 +1,27 @@
+{
+  "translation": {
+    "signIn": {
+        "title": "Sign In",
+        "login": "Login",
+        "forgotPassword": "Forgot Password?",
+        "signUp": "Sign Up",
+        "haveAccount": "Don't have an account?",
+        "email": "Email",
+        "password": "Password"
+    },
+    "signUp": {
+      "title": "Sign Up",
+      "login": "Login",
+      "forgotPassword": "Forgot Password?",
+      "signUp": "Sign Up",
+      "haveAccount": "Do you have an account?",
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm password"
+    },
+    "forgotPassword": {
+      "title": "Forgot password",
+      "reset": "Reset"
+    }
+  }
+}

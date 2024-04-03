@@ -1,0 +1,1 @@
+export const GET_REWARD_BALANCE = 'GET_REWARD_BALANCE';

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "312608658287",
+    "project_id": "ryman-app---staging",
+    "storage_bucket": "ryman-app---staging.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:312608658287:android:cbac1e59a93258cf434e9a",
+        "android_client_info": {
+          "package_name": "com.ryman"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCHOWrSgDJRGIx6w2uXSRxwWmuTgMEjJIU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

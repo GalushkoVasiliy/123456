@@ -25,9 +25,6 @@ Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _roo
 ### For Android
 
 ```bash
-# using npm
-npm run android
-
 # OR using Yarn
 yarn android
 ```
@@ -35,8 +32,14 @@ yarn android
 ### For iOS
 
 ```bash
-# using npm
-npm run ios
+# update env stage1
+yarn set:stage1
+
+# update env stage2
+yarn set:stage2
+
+# update env prod
+yarn set:prod
 
 # OR using Yarn
 yarn ios
@@ -45,6 +48,15 @@ yarn ios
 If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
 
 This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+
+## Link assets
+
+To link the assets:
+
+```bash
+# or using yarn:
+yarn react-native-asset
+```
 
 ## Step 3: Modifying your App
 

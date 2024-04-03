@@ -5,114 +5,218 @@
  * @format
  */
 
-import React from 'react';
-import type {PropsWithChildren} from 'react';
+import React, {useRef, useMemo, useCallback, useState, useEffect} from 'react';
 import {
   SafeAreaView,
-  ScrollView,
-  StatusBar,
   StyleSheet,
-  Text,
-  useColorScheme,
   View,
+  Dimensions,
+  StatusBar,
+  Platform,
 } from 'react-native';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import BottomSheet, {
+  BottomSheetBackdrop,
+  BottomSheetBackdropProps,
+} from '@gorhom/bottom-sheet';
 
+import RootNavigator from './src/navigation/RootNavigator';
+import COLORS from './src/config/COLORS';
 import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+  DROPDOWN_PAGES,
+  DropDownContext,
+  DropdownValues,
+} from './src/utils/dropdown-context';
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
+import {Provider} from 'react-redux';
+import {PersistGate} from 'redux-persist/integration/react';
+import {store, persistor} from './src/redux';
+import Cart from './src/components/Cart/Cart';
+import Checkout from './src/components/Checkout/Checkout';
+import Store from './src/components/Store/Store';
+import Toast, {BaseToast, ErrorToast} from 'react-native-toast-message';
+import {ModalProvider} from './src/utils/modal-context';
+import analytics from '@react-native-firebase/analytics';
 
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
+function App() {
+  const bottomSheetRef = useRef<BottomSheet>(null);
+  const snapPoints = useMemo(() => ['90%'], []);
 
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+  const [storeFinder, setStoreFinder] = useState();
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  const handleExpandPress = useCallback(() => {
+    bottomSheetRef.current?.expand();
+  }, []);
+
+  const handleClosePress = useCallback(() => {
+    bottomSheetRef.current?.close();
+  }, []);
+
+  const [content, setContent] = React.useState<DROPDOWN_PAGES | null>(null);
+
+  const onChange = (asset: 0 | -1) => {
+    if (asset === -1) {
+      setContent(null);
+    }
   };
 
+  const analyticsEnable = async () => {
+    await analytics().logAppOpen();
+  };
+
+  useEffect(() => {
+    analyticsEnable();
+  }, []);
+
+  const renderBackdrop = useCallback(
+    (props: BottomSheetBackdropProps) => (
+      <BottomSheetBackdrop
+        onPress={handleClosePress}
+        appearsOnIndex={0}
+        disappearsOnIndex={-1}
+        opacity={0.5}
+        style={[props.style]}
+        {...props}>
+        <View style={styles.backDrop} />
+      </BottomSheetBackdrop>
+    ),
+    [handleClosePress],
+  );
+
+  const contextUpdate = useMemo(
+    () => ({
+      toOpen: (values: DropdownValues) => {
+        handleExpandPress();
+        setContent(values.page);
+        setStoreFinder(values.content);
+      },
+      toClose: () => {
+        handleClosePress();
+      },
+    }),
+    [handleExpandPress, handleClosePress],
+  );
+
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <DropDownContext.Provider value={contextUpdate}>
+      <Provider store={store}>
+        <ModalProvider>
+          <GestureHandlerRootView style={styles.handler}>
+            <PersistGate loading={null} persistor={persistor}>
+              <SafeAreaView style={styles.container}>
+                <StatusBar
+                  backgroundColor={
+                    Platform.OS === 'android' ? COLORS.red : 'transparent'
+                  }
+                />
+                <RootNavigator />
+                <BottomSheet
+                  onChange={onChange}
+                  enablePanDownToClose
+                  ref={bottomSheetRef}
+                  snapPoints={snapPoints}
+                  backdropComponent={renderBackdrop}
+                  handleIndicatorStyle={styles.handleIndicator}
+                  handleStyle={styles.handle}
+                  index={-1}
+                  animateOnMount
+                  backgroundStyle={{
+                    backgroundColor: COLORS.white,
+                  }}>
+                  {content === DROPDOWN_PAGES.cart && <Cart />}
+                  {content === DROPDOWN_PAGES.store && (
+                    <Store storeFinder={storeFinder} />
+                  )}
+                  {content === DROPDOWN_PAGES.checkout && <Checkout />}
+                </BottomSheet>
+
+                <Toast
+                  visibilityTime={2000}
+                  position="bottom"
+                  bottomOffset={80}
+                  config={{
+                    success: props => (
+                      <BaseToast
+                        {...props}
+                        style={{
+                          borderLeftWidth: 8,
+                          borderLeftColor: COLORS.green,
+                          borderRadius: 0,
+                          width: Dimensions.get('screen').width - 30,
+                        }}
+                        text1Style={{
+                          fontWeight: '400',
+                        }}
+                        text1NumberOfLines={3}
+                      />
+                    ),
+                    error: props => (
+                      <ErrorToast
+                        {...props}
+                        style={{
+                          borderLeftWidth: 8,
+                          borderLeftColor: COLORS.red,
+                          borderRadius: 0,
+                          width: Dimensions.get('screen').width - 30,
+                        }}
+                        text1Style={{
+                          fontWeight: '400',
+                        }}
+                        text1NumberOfLines={3}
+                      />
+                    ),
+                    warning: props => (
+                      <BaseToast
+                        {...props}
+                        style={{
+                          borderLeftWidth: 8,
+                          borderLeftColor: COLORS.yellow,
+                          borderRadius: 0,
+                          width: Dimensions.get('screen').width - 30,
+                        }}
+                        text1Style={{
+                          fontWeight: '400',
+                        }}
+                        text1NumberOfLines={3}
+                      />
+                    ),
+                  }}
+                />
+              </SafeAreaView>
+            </PersistGate>
+          </GestureHandlerRootView>
+        </ModalProvider>
+      </Provider>
+    </DropDownContext.Provider>
   );
 }
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  handler: {flex: 1},
+  container: {flex: 1, backgroundColor: COLORS.red},
+  button: {
+    paddingHorizontal: 15,
+    height: 80,
+    width: '100%',
+    justifyContent: 'center',
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+  title: {
+    color: COLORS.white,
+    fontFamily: 'tajawal',
+    fontSize: 20,
+    fontWeight: '800',
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
+  sheetTitle: {color: COLORS.white, fontSize: 24, fontWeight: '800'},
+  handleIndicator: {
+    backgroundColor: COLORS.black,
   },
-  highlight: {
-    fontWeight: '700',
+  handle: {
+    backgroundColor: COLORS.white,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
   },
+  wrapper: {flex: 1},
+  backDrop: {flex: 1, backgroundColor: COLORS.black},
 });
 
 export default App;
