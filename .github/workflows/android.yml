@@ -1,0 +1,67 @@
+name: "Build Android app"
+
+on:
+  push:
+    branches:
+      # - action-test
+      - 'hotfix*'
+  pull_request:
+    branches:
+      # - action-test
+      - 'hotfix**'
+  create:
+    branches:
+      - 'hotfix**'
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - name: List contents of GITHUB_WORKSPACE
+        run:
+          echo "${{ secrets.SSH }}"
+
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: adopt
+          cache: gradle
+
+      - name: Validate Gradle wrapper
+        uses: gradle/wrapper-validation-action@v1
+
+      - name: Setup Node  
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.17.1'
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: npm install --legacy-peer-deps
+
+      - name: Set up environment variables
+        run:
+          echo "${{ secrets.ENV_STAGE }}" > .env.stage1
+
+      - name: Run rnuc .env.stage1
+        run: npx rnuc .env.stage1
+
+      - name: Configure Git
+        run: |
+          git config --global user.email "vasylhalushko@tprg.com"
+          git config --global user.name "VasylHalushkoTPRG"
+
+      - name: Build application
+        run: |
+             cd android
+             ./gradlew assembleRelease
+
+      - name: Upload application
+        uses: actions/upload-artifact@v2
+        with:
+          name: app
+          path: android/app/build/outputs/apk/release/app-release.apk
+          retention-days: 3
