@@ -31,7 +31,7 @@ target 'ryman' do
   use_frameworks! :linkage => :static
   $RNFirebaseAsStaticFramework = true
 
-  # use_modular_headers!
+  use_modular_headers!
   # Flags change depending on the env values.
   flags = get_default_flags()
 

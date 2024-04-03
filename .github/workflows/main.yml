@@ -46,16 +46,16 @@ jobs:
     - name: Build iOS app
       run: |
         cd ios
-        xcodebuild -project ios/Ryman.xcodeproj -scheme ryman -sdk iphoneos -configuration Release build CODE_SIGN_STYLE=Automatic CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+        xcodebuild -project Ryman.xcodeproj -scheme ryman -sdk iphoneos -configuration Release build CODE_SIGN_STYLE=Automatic CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
 
     - name: Archive artifacts
       uses: actions/upload-artifact@v2
       with:
         name: ios-build
         path: ios/build/Build/Products/Debug-iphonesimulator/Ryman.app
-    - name: Build iOS app
-      run: |
-        xcodebuild -project ios/ryman.xcodeproj -scheme ryman -sdk iphoneos -configuration Release build CODE_SIGN_STYLE=Automatic CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+    # - name: Build iOS app
+    #   run: |
+    #     xcodebuild -project ios/ryman.xcodeproj -scheme ryman -sdk iphoneos -configuration Release build CODE_SIGN_STYLE=Automatic CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
 
     - name: Create IPA
       run: xcrun -sdk iphoneos PackageApplication -v build/Release-iphoneos/Ryman.app -o Ryman.ipa
