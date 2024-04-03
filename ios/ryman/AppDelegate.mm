@@ -1,6 +1,6 @@
 #import "AppDelegate.h"
 #import <Firebase.h>
-#import "../../node_modules/react-native/React/RCTAppDelegate.h"
+// #import "../../node_modules/react-native/React/RCTAppDelegate.h"
 
 #import <React/RCTBundleURLProvider.h>
 
