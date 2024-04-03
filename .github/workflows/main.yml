@@ -53,9 +53,6 @@ jobs:
       with:
         name: ios-build
         path: ios/build/Build/Products/Debug-iphonesimulator/Ryman.app
-    # - name: Build iOS app
-    #   run: |
-    #     xcodebuild -project ios/ryman.xcodeproj -scheme ryman -sdk iphoneos -configuration Release build CODE_SIGN_STYLE=Automatic CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
-
     - name: Create IPA
-      run: xcrun -sdk iphoneos PackageApplication -v build/Release-iphoneos/Ryman.app -o Ryman.ipa
+      run:  xcodebuild -exportArchive -archivePath Ryman.xcarchive -exportPath Ryman -exportOptionsPlist ExportOptions.plist
+
