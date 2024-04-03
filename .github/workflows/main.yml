@@ -1,0 +1,130 @@
+name: iOS Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  create:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+    - name: List contents of GITHUB_WORKSPACE
+      run: |
+        echo "${{ secrets.SSH }}"
+      # run: |
+        # ls -l $GITHUB_WORKSPACE/.env.stage1
+        # cat $GITHUB_WORKSPACE/.env.stage1
+        # hexdump -C $GITHUB_WORKSPACE/.env.stage1
+
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      # with:
+      #   ssh-key: ${{ secrets.SSH }}
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18.17.1'
+
+    - name: Install dependencies
+      run: npm install --legacy-peer-deps
+
+    - name: Set up environment variables
+      run:
+        # echo "${{ env.stage1 }}" > .env.stage12
+        # echo "${{ vars.stage1 }}" > .env.stage13
+        # echo "${{ env.API_BASE_URL }}" > .env.stage15
+        # echo "${{ vars.ENV_STAGE1 }}" > .env.stage
+        # echo "${{ env.ENV_STAGE }}" > .env.stage
+        echo "${{ secrets.ENV_STAGE }}" > .env.stage1
+
+    # - name: Display contents of .env.stage1 file
+    #   run: |
+    #     ls -la
+    #     cat .env.stage1
+
+    # - name: Display contents of .env.stage1 file 2
+    #   run:
+    #     cat .env.stage1
+    #     # cat .env.stage
+
+    # - name: Display environment variables
+    #   run: |
+    #     echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
+    #     echo "ENV_STAGE1: ${{ secrets.ENV_STAGE }}"
+
+    # - name: List contents of GITHUB_WORKSPACE
+    #   run: |
+    #     ls -l $GITHUB_WORKSPACE/.env.stage1
+    #     cat $GITHUB_WORKSPACE/.env.stage1
+    #     hexdump -C $GITHUB_WORKSPACE/.env.stage1
+
+    - name: Run rnuc .env.stage1
+      run: npx rnuc .env.stage1
+
+    # - name: Setup Environment
+    #   run: |
+    #     echo "Node.js path: $(which node)"  # Вывод пути к исполняемому файлу Node.js
+    #     echo "Command: node $GITHUB_WORKSPACE/node_modules/react-native-ultimate-config/bin.js --env-file=\"$GITHUB_WORKSPACE/.env.stage1\""
+    #     node $GITHUB_WORKSPACE/node_modules/react-native-ultimate-config/bin.js --env-file="/Users/runner/work/rymanprintingapp/rymanprintingapp/.env.stage1"
+    # - name: Set up environment variables
+    #   env:
+    #     ENV_STAGE: ${{ secrets.ENV_STAGE }}
+    #   run: |
+    #     echo "$ENV_STAGE" > .env
+    # - name: Set up environment variables 2
+    #   env:
+    #     ENV_STAGE: ${{ secrets.ENV_STAGE }}
+    #   run: |
+    #     echo "$ENV_STAGE" > .env.stage1
+
+
+    # - name: Use secret
+    #   run: echo "${{ secrets.ENV_STAGE }}"
+
+    # - name: Setup Environment
+    #   run: node ${{ github.workspace }}/node_modules/react-native-ultimate-config/bin.js --env-file="${{ secrets.ENV_STAGE }}"
+
+    # - name: Create .env.stage1 file
+    #   run: echo "${{ secrets.ENV_STAGE }}" > ${{ github.workspace }}/.env.stage1
+
+    # - name: Setup Environment
+    #   run: node ${{ github.workspace }}/node_modules/react-native-ultimate-config/bin.js --env-file="${{ github.workspace }}/.env.stage1" 
+
+    # - name: Use secret
+    #   run: npm run rnuc "${{ secrets.ENV_STAGE }}"
+
+    - name: Configure Git
+      run: |
+        git config --global user.email "vasylhalushko@tprg.com"
+        git config --global user.name "VasylHalushkoTPRG"
+
+    # - name: Install CocoaPods
+    #   run: |
+    #     sudo gem install cocoapods
+    #     pod install --project-directory=ios
+
+    # - name: Build iOS app
+    #   run: |
+    #     cd ios
+    #     xcodebuild -workspace ryman.xcworkspace -scheme ryman -destination 'platform=iOS Simulator,name=iPhone 11' build VERBOSE=1
+
+    # - name: Archive artifacts
+    #   uses: actions/upload-artifact@v2
+    #   with:
+    #     name: ios-build
+    #     path: ios/build/Build/Products/Debug-iphonesimulator/Ryman.app
+    # - name: Build iOS app
+    #   run: |
+    #     xcodebuild -project ios/ryman.xcodeproj -scheme ryman -sdk iphoneos -configuration Release build CODE_SIGN_STYLE=Automatic CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+
+    # - name: Create IPA
+    #   run: xcrun -sdk iphoneos PackageApplication -v build/Release-iphoneos/Ryman.app -o Ryman.ipa
