@@ -46,7 +46,7 @@ jobs:
     - name: Build iOS app
       run: |
         cd ios
-        xcodebuild -project ios/ryman.xcodeproj -scheme ryman -sdk iphoneos -configuration Release build CODE_SIGN_STYLE=Automatic CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+        xcodebuild -project ios/Ryman.xcodeproj -scheme ryman -sdk iphoneos -configuration Release build CODE_SIGN_STYLE=Automatic CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
 
     - name: Archive artifacts
       uses: actions/upload-artifact@v2
