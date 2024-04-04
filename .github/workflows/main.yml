@@ -54,5 +54,5 @@ jobs:
         name: ios-build
         path: ios/build/Build/Products/Debug-iphonesimulator/Ryman.app
     - name: Create IPA
-      run:  xcodebuild -exportArchive -archivePath Ryman.xcarchive -exportPath Ryman -exportOptionsPlist ExportOptions.plist
+      run:  xcodebuild -exportArchive -archivePath ios/Ryman.xcarchive -exportPath Ryman -exportOptionsPlist ExportOptions.plist
 
