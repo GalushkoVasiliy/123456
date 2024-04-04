@@ -14,7 +14,7 @@ import {
   NEWRELIC_ANDROID_TOKEN,
   NEWRELIC_IOS_TOKEN,
 } from './src/config/CONSTANTS';
-
+ 
 function getNewRelicToken() {
   if (Platform.OS === 'ios') {
     return NEWRELIC_IOS_TOKEN;
