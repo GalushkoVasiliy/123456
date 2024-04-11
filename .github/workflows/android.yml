@@ -54,14 +54,17 @@ jobs:
           git config --global user.email "vasylhalushko@tprg.com"
           git config --global user.name "VasylHalushkoTPRG"
 
-      - name: Build application
-        run: |
-             cd android
-             ./gradlew assembleRelease
+      # - name: Build application
+      #   run: |
+      #        cd android
+      #        ./gradlew assembleRelease
 
-      - name: Upload application
-        uses: actions/upload-artifact@v2
-        with:
-          name: app
-          path: android/app/build/outputs/apk/release/app-release.apk
-          retention-days: 3
+      # - name: Upload application
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: app
+      #     path: android/app/build/outputs/apk/release/app-release.apk
+      #     retention-days: 3
+
+      - name: Increment version
+        run: awk -v new_version="$(($(awk '/versionCode/ {print $2}' app/build.gradle)+1))" '/versionCode/ {$2=new_version} 1' app/build.gradle > app/build.gradle.tmp && mv app/build.gradle.tmp app/build.gradle
