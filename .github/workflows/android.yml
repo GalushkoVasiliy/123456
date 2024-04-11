@@ -67,5 +67,11 @@ jobs:
       #     path: android/app/build/outputs/apk/release/app-release.apk
       #     retention-days: 3
 
+      # Добавляем этот шаг для вывода содержимого файла build.gradle
+      - name: Show current version
+        run: cat android/app/build.gradle
+
       - name: Increment version
         run: awk -v new_version="$(($(awk '/versionCode/ {print $2}' android/app/build.gradle)+1))" '/versionCode/ {$2=new_version} 1' android/app/build.gradle > android/app/build.gradle.tmp && mv android/app/build.gradle.tmp android/app/build.gradle
+      - name: Show updated version
+        run: cat android/app/build.gradle
