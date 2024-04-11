@@ -3,6 +3,7 @@ name: "Build Android app"
 on:
   push:
     branches:
+      - 'main'
       # - action-test
       - 'hotfix*'
   pull_request:
