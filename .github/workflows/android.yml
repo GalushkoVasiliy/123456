@@ -75,7 +75,7 @@ jobs:
         run: |
           current_version=$(awk '/versionCode/ {print $2}' android/app/build.gradle)
           new_version=$((current_version + 1))
-          sed -i 's/versionCode '"$current_version"'/versionCode '"$new_version"'/' android/app/build.gradle
-          sed -i 's/versionName ".*"/versionName "1.'"$new_version"'"/' android/app/build.gradle
+          sed -i "s/versionCode $current_version/versionCode $new_version/" android/app/build.gradle
+          sed -i "s/versionName \"[^\"]*\"/versionName \"1.$new_version\"/" android/app/build.gradle
       - name: Show updated version
         run: cat android/app/build.gradle
