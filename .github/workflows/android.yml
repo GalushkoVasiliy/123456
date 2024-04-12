@@ -71,7 +71,7 @@ jobs:
       - name: Show current version
         run: cat android/app/build.gradle
 
-      - name: Increment version
+      - name: Increment version1
         run: |
           current_version=$(awk '/versionCode/ {print $2}' android/app/build.gradle)
           new_version=$((current_version + 1))
