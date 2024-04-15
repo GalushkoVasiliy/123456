@@ -56,7 +56,7 @@ jobs:
 
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
           tar xzvf $PP_ARCHIVE -C $RUNNER_TEMP
-          for PROVISION in `ls $RUNNER_TEMP/ios/ios-build/*.mobileprovision`
+          for PROVISION in `ls /Users/runner/work/_temp/ios/ios-build/*.mobileprovision`
           do
             UUID=`/usr/libexec/PlistBuddy -c 'Print :UUID' /dev/stdin <<< $(security cms -D -i $PROVISION)`
             cp $PROVISION ~/Library/MobileDevice/Provisioning\ Profiles/$UUID.mobileprovision
