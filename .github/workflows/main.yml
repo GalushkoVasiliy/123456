@@ -37,25 +37,20 @@ jobs:
           PROVISION_PROFILES_BASE64: ${{ secrets.PROVISION_PROFILES_BASE64 }}
           KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
         run: |
-          # create variables
           CERTIFICATE_PATH=$RUNNER_TEMP/Certificate.p12
           PP_ARCHIVE=$RUNNER_TEMP/mobile_pp.tgz
           KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
 
-          # import certificate and provisioning profile from secrets
           echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode -o $CERTIFICATE_PATH
           echo -n "$PROVISION_PROFILES_BASE64" | base64 --decode -o $PP_ARCHIVE
 
-          # create temporary keychain
           security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
           security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
           security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
 
-          # import certificate to keychain
           security import $CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
           security list-keychain -d user -s $KEYCHAIN_PATH
 
-          # extract and copy provisioning profile(s)
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
           tar xzvf $PP_ARCHIVE -C $RUNNER_TEMP
           for PROVISION in `ls $RUNNER_TEMP/*.mobileprovision`
@@ -64,7 +59,6 @@ jobs:
             cp $PROVISION ~/Library/MobileDevice/Provisioning\ Profiles/$UUID.mobileprovision
           done
           
-          # echo some output
           security find-identity -v -p codesigning
           ls -l ~/Library/MobileDevice/Provisioning\ Profiles  
           echo "$BUILD_CERTIFICATE_BASE64" | base64 --decode > "$CERTIFICATE_PATH"
