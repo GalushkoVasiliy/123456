@@ -73,8 +73,8 @@ jobs:
           xcodebuild -exportArchive -archivePath $RUNNER_TEMP/joplin.xcarchive -exportOptionsPlist $EXPORT_OPTS_PATH -exportPath $RUNNER_TEMP/build
 
       - name: Upload application
-          uses: actions/upload-artifact@v3
-          with:
-            name: RymanBuild
-            path: ${{ runner.temp }}/build/Ryman.ipa
-            retention-days: 3
+        uses: actions/upload-artifact@v3
+        with:
+          name: RymanBuild
+          path: ${{ runner.temp }}/build/Ryman.ipa
+          retention-days: 3
