@@ -40,7 +40,7 @@ jobs:
           PP_ARCHIVE: $RUNNER_TEMP/mobile_pp.tgz
           KEYCHAIN_PATH: $RUNNER_TEMP/app-signing.keychain-db
         run: |
-          echo -n "$BUILD_CERTIFICATE_BASE64" | openssl enc -d -base64 | tee "${RUNNER_TEMP}/Certificate.p12" > /dev/null
+          echo -n "$BUILD_CERTIFICATE_BASE64" | openssl enc -d -base64 > "${RUNNER_TEMP}/Certificate.p12"
           echo -n "$PROVISION_PROFILES_BASE64" | openssl enc -d -base64 -o $PP_ARCHIVE
 
           security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
