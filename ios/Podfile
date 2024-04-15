@@ -56,6 +56,15 @@ target 'ryman' do
     # Pods for testing
   end
 
+  def handle_targets_config(installer)
+    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |config|
+          # ==> change in the below line 11.0 by 12.0 <==
+          config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.0'
+      end
+    end
+  end
+
   post_install do |installer|
     # https://github.com/facebook/react-native/blob/main/packages/react-native/scripts/react_native_pods.rb#L197-L202
     react_native_post_install(
