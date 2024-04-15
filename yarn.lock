@@ -8404,10 +8404,10 @@ react-native-video@^5.2.1:
     prop-types "^15.7.2"
     shaka-player "^2.5.9"
 
-react-native-wallet-manager@^0.0.4:
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/react-native-wallet-manager/-/react-native-wallet-manager-0.0.4.tgz#01d293ac9697efb79996858851e276457fe18c26"
-  integrity sha512-TUZVobrwGX7hM9YYyBuyuhH1r+EBdG69KdKwNLZB65K0UgAvIcc7iMbHVqyVLd+lF5IWAN9dgq/jR3Jj/f4l3Q==
+react-native-wallet-manager@^0.0.6:
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/react-native-wallet-manager/-/react-native-wallet-manager-0.0.6.tgz#4c8cf827839716e2460786ffadc0286a1bee253c"
+  integrity sha512-VZ8eao1kWdB6ZZ7cpP4eUvsnTDmSY9F1j0G5ayIZ+gMhhj10xiWSXygL6unVLCJj4/wdJ2GX93pZXuLvjeRCTQ==
 
 react-native-webview@^13.6.0:
   version "13.6.0"

@@ -451,7 +451,7 @@ PODS:
     - react-native-video/Video (= 5.2.1)
   - react-native-video/Video (5.2.1):
     - React-Core
-  - react-native-wallet-manager (0.0.4):
+  - react-native-wallet-manager (0.0.6):
     - React-Core
   - react-native-webview (13.6.0):
     - React-Core
@@ -900,7 +900,7 @@ SPEC CHECKSUMS:
   React-Core: 34da8c952844e21f5a69bf46438fb6bf063900d0
   React-CoreModules: 621243df8863055ff30f3bb2ff71573ffa7b16c8
   React-cxxreact: 4ad1cc861e32fb533dad6ff7a4ea25680fa1c994
-  React-debug: 482d45cbe61a8565ee7ddacca97be62a666214fc
+  React-debug: a0275cc4e987f63d7cb3ba66e8f188d803969e0a
   React-hermes: 37377d0a56aa0cf55c65248271866ce3268cde3f
   React-jsi: 6de8b0ccc6b765b58e4eee9ee38049dbeaf5c221
   React-jsiexecutor: c7f826e40fa9cab5d37cab6130b1af237332b594
@@ -914,9 +914,9 @@ SPEC CHECKSUMS:
   react-native-safe-area-context: 7aa8e6d9d0f3100a820efb1a98af68aa747f9284
   react-native-ultimate-config: bc816775e31bb2056ccfe18b49e76a5ba2d39b6c
   react-native-video: c26780b224543c62d5e1b2a7244a5cd1b50e8253
-  react-native-wallet-manager: dc9224c5067825644c61bb3ce4d1a2fa9af7bb71
+  react-native-wallet-manager: 881b5fe65b06c170df77dd362a7404f8f5eef0bb
   react-native-webview: 669ae162965f629a8d6a4bdd3b99a304d36ef1f2
-  React-NativeModulesApple: ca8ba65434152bba57555884e34e60f391494f35
+  React-NativeModulesApple: 7336a381a970c2afcd977564381eb5c4df01b8ee
   React-perflogger: 496a1a3dc6737f964107cb3ddae7f9e265ddda58
   React-RCTActionSheet: 02904b932b50e680f4e26e7a686b33ebf7ef3c00
   React-RCTAnimation: e44fe5053708c5be762943087c78dc5a6a3c645c
@@ -930,9 +930,9 @@ SPEC CHECKSUMS:
   React-RCTVibration: 35eec7201c8ffdaccdd908a5ec874b7055f975f3
   React-rncore: 46133d523155fc84572338bd6a7c461c1d873efc
   React-runtimeexecutor: d465ba0c47ef3ed8281143f59605cacc2244d5c7
-  React-runtimescheduler: 631fc733454a3c065b23061ad22735f5104cbc4f
-  React-utils: f495efcd13622e8fbfd7334a3542e2533fe584c6
-  ReactCommon: 8832c01e6bb281df2a06a06f2c3b6991c10e77b8
+  React-runtimescheduler: df2e105d34e993f615f8ce5608c836377fafea0e
+  React-utils: 24dafe29d16834c6168ada5b98a4abcf0983b6d7
+  ReactCommon: a8671c1624454e0cf5a591d86c6d1c454163c06b
   RNCAsyncStorage: c913ede1fa163a71cea118ed4670bbaaa4b511bb
   RNCMaskedView: 949696f25ec596bfc697fc88e6f95cf0c79669b6
   RNCPicker: 529d564911e93598cc399b56cc0769ce3675f8c8
@@ -953,6 +953,6 @@ SPEC CHECKSUMS:
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   Yoga: 3efc43e0d48686ce2e8c60f99d4e6bd349aff981
 
-PODFILE CHECKSUM: 0c50449947171ff5cc96912f636a9e31ab0c1222
+PODFILE CHECKSUM: 9a01e2124e57d136d730b97503024c644a92812e
 
-COCOAPODS: 1.13.0
+COCOAPODS: 1.15.2
