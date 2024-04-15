@@ -12,7 +12,7 @@ on:
       - main
 
 jobs:
-  build_with_signing:
+  build:
     runs-on: macos-latest
 
     steps:
