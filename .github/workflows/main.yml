@@ -36,7 +36,7 @@ jobs:
       - name: Clean Xcode Build
         run: |
           cd ios
-          xcodebuild clean -workspace your_app.xcworkspace -scheme your_app
+          xcodebuild clean -workspace ryman.xcworkspace -scheme ryman
 
       - name: Install dependencies
         run: npm install --legacy-peer-deps
