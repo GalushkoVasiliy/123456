@@ -36,12 +36,16 @@ jobs:
           P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
           PROVISION_PROFILES_BASE64: ${{ secrets.PROVISION_PROFILES_BASE64 }}
           KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
-          CERTIFICATE_PATH: $RUNNER_TEMP/Certificate.p12
-          PP_ARCHIVE: $RUNNER_TEMP/mobile_pp.tgz
-          KEYCHAIN_PATH: $RUNNER_TEMP/app-signing.keychain-db
+          # CERTIFICATE_PATH: $RUNNER_TEMP/Certificate.p12
+          # PP_ARCHIVE: $RUNNER_TEMP/mobile_pp.tgz
+          # KEYCHAIN_PATH: $RUNNER_TEMP/app-signing.keychain-db
         run: |
-          echo -n "$BUILD_CERTIFICATE_BASE64" | openssl enc -d -base64 -out "${RUNNER_TEMP}/Certificate.p12"
-          echo -n "$PROVISION_PROFILES_BASE64" | openssl enc -d -base64 -o $PP_ARCHIVE
+          CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
+          PP_ARCHIVE=$RUNNER_TEMP/mobile_pp.tgz
+          KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+
+          echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode -o $CERTIFICATE_PATH
+          echo -n "$PROVISION_PROFILES_BASE64" | base64 --decode -o $PP_ARCHIVE
 
           security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
           security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
