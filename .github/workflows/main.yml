@@ -37,7 +37,7 @@ jobs:
           PROVISION_PROFILES_BASE64: ${{ secrets.PROVISION_PROFILES_BASE64 }}
           KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
         run: |
-          CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
+          CERTIFICATE_PATH=$RUNNER_TEMP/Certificate.p12
           PP_ARCHIVE=$RUNNER_TEMP/mobile_pp.tgz
           KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
 
