@@ -78,11 +78,9 @@ jobs:
           -exportOptionsPlist $EXPORT_OPTS_PATH \
           -exportPath $RUNNER_TEMP/build   
 
-    - name: Upload application
-        uses: actions/upload-artifact@v3
-        with:
-          name: app
-          path: ${{ runner.temp }}/build/Joplin.ipa
-          # you can also archive the entire directory 
-          # path: ${{ runner.temp }}/build
-          retention-days: 3
+    # - name: Upload application
+    #     uses: actions/upload-artifact@v3
+    #     with:
+    #       name: app
+    #       path: ${{ runner.temp }}/build/Joplin.ipa
+    #       retention-days: 3

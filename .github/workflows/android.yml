@@ -3,16 +3,16 @@ name: "Build Android app"
 on:
   push:
     branches:
-      - 'main'
+      # - 'main'
       # - action-test
-      - 'hotfix*'
+      - 'hotfix11*'
   pull_request:
     branches:
       # - action-test
-      - 'hotfix**'
+      - 'hotfix11**'
   create:
     branches:
-      - 'hotfix**'
+      - 'hotfix11**'
 jobs:
   build:
     runs-on: macos-latest
