@@ -36,9 +36,9 @@ jobs:
           P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
           PROVISION_PROFILES_BASE64: ${{ secrets.PROVISION_PROFILES_BASE64 }}
           KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
-          CERTIFICATE_PATH: "$RUNNER_TEMP/Certificate.p12"
-          PP_ARCHIVE: "$RUNNER_TEMP/mobile_pp.tgz"
-          KEYCHAIN_PATH: "$RUNNER_TEMP/app-signing.keychain-db"
+          CERTIFICATE_PATH: ${{ runner.temp }}/Certificate.p12
+          PP_ARCHIVE: ${{ runner.temp }}/mobile_pp.tgz
+          KEYCHAIN_PATH: ${{ runner.temp }}/app-signing.keychain-db
         run: |
           echo "$BUILD_CERTIFICATE_BASE64" | base64 --decode > "$CERTIFICATE_PATH"
           echo "$PROVISION_PROFILES_BASE64" | base64 --decode > "$PP_ARCHIVE"
@@ -52,8 +52,8 @@ jobs:
           security list-keychain -d user -s "$KEYCHAIN_PATH"
 
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-          tar xzvf "$PP_ARCHIVE" -C "$RUNNER_TEMP"
-          for PROVISION in $(ls "$RUNNER_TEMP"/*.mobileprovision)
+          tar xzvf "$PP_ARCHIVE" -C "${{ runner.temp }}"
+          for PROVISION in $(ls "${{ runner.temp }}"/*.mobileprovision)
           do
             UUID=$(/usr/libexec/PlistBuddy -c 'Print :UUID' /dev/stdin <<< $(security cms -D -i "$PROVISION"))
             cp "$PROVISION" ~/Library/MobileDevice/Provisioning\ Profiles/"$UUID".mobileprovision
