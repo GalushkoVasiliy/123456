@@ -73,17 +73,17 @@ jobs:
 
       - name: Increment version1
         run: |
-        current_version=$(awk -F'"' '/versionName/ {print $2}' android/app/build.gradle)
-        major_version=$(echo $current_version | cut -d '.' -f 1)
-        minor_version=$(echo $current_version | cut -d '.' -f 2)
-        patch_version=$(echo $current_version | cut -d '.' -f 3)
+          current_version=$(awk -F'"' '/versionName/ {print $2}' android/app/build.gradle)
+          major_version=$(echo $current_version | cut -d '.' -f 1)
+          minor_version=$(echo $current_version | cut -d '.' -f 2)
+          patch_version=$(echo $current_version | cut -d '.' -f 3)
 
-        if [[ $patch_version -lt 9 ]]; then
-          new_version="$major_version.$minor_version.$((patch_version + 1))"
-        else
-          new_version="$major_version.$((minor_version + 1)).0"
-        fi
+          if [[ $patch_version -lt 9 ]]; then
+            new_version="$major_version.$minor_version.$((patch_version + 1))"
+          else
+            new_version="$major_version.$((minor_version + 1)).0"
+          fi
 
-        sed -i '' "s/versionName \"$current_version\"/versionName \"$new_version\"/" android/app/build.gradle
+          sed -i '' "s/versionName \"$current_version\"/versionName \"$new_version\"/" android/app/build.gradle
       - name: Show updated version
         run: cat android/app/build.gradle
