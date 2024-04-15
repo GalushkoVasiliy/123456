@@ -12,50 +12,47 @@ on:
       - main
 
 jobs:
-  build:
+  build_with_signing:
     runs-on: macos-latest
 
     steps:
-    - name: List contents of GITHUB_WORKSPACE
-      run: |
-        echo "${{ secrets.SSH }}"
+      - name: check Xcode version
+        run: /usr/bin/xcodebuild -version
+      - name: checkout repository
+        uses: actions/checkout@v3
+      - name: List contents of GITHUB_WORKSPACE
+        run: |
+          echo "${{ secrets.SSH }}"
 
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.17.1'
+      - name: Clean workspace
+        run: |
+          git clean -ffdx
+          npm cache clean --force
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18.17.1'
+      - name: Clean Xcode Build
+        run: |
+          cd ios
+          xcodebuild clean -workspace your_app.xcworkspace -scheme your_app
 
-    - name: Install dependencies
-      run: npm install --legacy-peer-deps
+      - name: Install dependencies
+        run: npm install --legacy-peer-deps
 
-    - name: Set up environment variables
-      run:
-        echo "${{ secrets.ENV_STAGE }}" > .env.stage1
+      - name: Set up environment variables
+        run:
+          echo "${{ secrets.ENV_STAGE }}" > .env.stage1
 
-    - name: Run rnuc .env.stage1
-      run: npx rnuc .env.stage1
+      - name: Run rnuc .env.stage1
+        run: npx rnuc .env.stage1
 
-    - name: Install CocoaPods
-      run: |
-        sudo gem install cocoapods
-        pod install --project-directory=ios
-
-    # - name: Build iOS app
-    #   run: |
-    #     cd ios
-    #     xcodebuild -workspace Ryman.xcworkspace -scheme ryman -destination 'platform=iOS Simulator,name=iPhone 11' build VERBOSE=1
-
-    # - name: Archive artifacts
-    #   uses: actions/upload-artifact@v2
-    #   with:
-    #     name: ios-build
-    #     path: ios/build/Build/Products/Debug-iphonesimulator/Ryman.app
-    # - name: Create IPA
-    #   run:  xcodebuild -exportArchive -archivePath ios/Ryman.xcarchive -exportPath Ryman -exportOptionsPlist ExportOptions.plist
-
+      - name: Install CocoaPods
+        run: |
+          sudo gem install cocoapods
+          pod install --project-directory=ios
+   
     - name: build archive
       run: |
         cd ios
@@ -78,9 +75,9 @@ jobs:
           -exportOptionsPlist $EXPORT_OPTS_PATH \
           -exportPath $RUNNER_TEMP/build   
 
-    # - name: Upload application
-    #     uses: actions/upload-artifact@v3
-    #     with:
-    #       name: app
-    #       path: ${{ runner.temp }}/build/Joplin.ipa
-    #       retention-days: 3
+    - name: Upload application
+        uses: actions/upload-artifact@v3
+        with:
+          name: RymanBuild
+          path: ${{ runner.temp }}/build/Joplin.ipa
+          retention-days: 3
