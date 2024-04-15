@@ -30,7 +30,7 @@ jobs:
           echo "PP_PATH: $PP_PATH"
           echo "KEYCHAIN_PATH: $KEYCHAIN_PATH"
           echo "P12_PASSWORD: $P12_PASSWORD"
-      - name: Install the Apple certificate and provisioning profile
+      - name: Set up environment variables
         env:
           BUILD_CERTIFICATE_BASE64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
           P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
