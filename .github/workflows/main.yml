@@ -40,8 +40,8 @@ jobs:
           # PP_ARCHIVE: $RUNNER_TEMP/mobile_pp.tgz
           # KEYCHAIN_PATH: $RUNNER_TEMP/app-signing.keychain-db
         run: |
-          CERTIFICATE_PATH=$RUNNER_TEMP/ios/ios-build/Certificate.p12
-          PP_PATH=$RUNNER_TEMP/ios/ios-build/Adhoc_github_actions.mobileprovision
+          CERTIFICATE_PATH=$RUNNER_TEMP/Certificate.p12
+          PP_PATH=$RUNNER_TEMP/Adhoc_github_actions.mobileprovision
           KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
 
           echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode -o $CERTIFICATE_PATH
