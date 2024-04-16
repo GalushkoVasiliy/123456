@@ -547,7 +547,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = uk.co.ryman.rymanprinting;
 				PRODUCT_NAME = ryman;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Ad-hoc github actions 3";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Ad-hoc github actions";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -581,7 +581,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = uk.co.ryman.rymanprinting;
 				PRODUCT_NAME = ryman;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Ad-hoc github actions 3";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Ad-hoc github actions";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
