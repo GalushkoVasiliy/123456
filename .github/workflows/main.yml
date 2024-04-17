@@ -41,7 +41,7 @@ jobs:
           # KEYCHAIN_PATH: $RUNNER_TEMP/app-signing.keychain-db
         run: |
           CERTIFICATE_PATH=$RUNNER_TEMP/Certificate.p12
-          PP_PATH=$RUNNER_TEMP/Adhoc_github_actions.mobileprovision
+          PP_PATH=$RUNNER_TEMP/Adhoc_github_actions_3.mobileprovision
           KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
 
           echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode -o $CERTIFICATE_PATH
